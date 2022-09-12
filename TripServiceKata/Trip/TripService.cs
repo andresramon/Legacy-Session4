@@ -15,13 +15,11 @@ namespace TripServiceKata.Trip
                 throw new UserNotLoggedInException();
             }
             
-            foreach(User.User friend in user.GetFriends())
+            if (user.IsFriendOf(loggedUser))
             {
-                if (friend.Equals(loggedUser))
-                {
-                    return FindTripsByUser(user);
-                }
+                return FindTripsByUser(user);
             }
+
             return new List<Trip>();
         }
 
@@ -29,6 +27,9 @@ namespace TripServiceKata.Trip
         {
             return TripDAO.FindTripsByUser(user);
         }
+
+
+
 
         protected virtual User.User GetLoggedUser()
         {
